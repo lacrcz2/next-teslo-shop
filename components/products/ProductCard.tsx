@@ -30,13 +30,17 @@ export const ProductCard: FC<Props> = ({ product }) => {
           <Card>
               <NextLink href={`/product/${ product.slug }`} passHref prefetch={ false } legacyBehavior>
                 <Link>
-                    <Chip
-                        color='primary'
-                        label='No hay disponibles'
-                        sx={{ position: 'absolute', zIndex: 99, top: '10px', left: '10px'}}
-                    />
 
                     <CardActionArea>
+                        {
+                            (product.inStock === 0) && (
+                                <Chip
+                                    color='primary'
+                                    label='No hay disponibles'
+                                    sx={{ position: 'absolute', zIndex: 99, top: '10px', left: '10px'}}
+                                />
+                            )
+                        }
                         <CardMedia 
                             component='img'
                             className='fadeIn'
