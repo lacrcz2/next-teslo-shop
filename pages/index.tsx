@@ -8,7 +8,7 @@ import { FullScreenLoading } from '@/components/ui';
 
 
 const HomePage: NextPage = () => {
-
+  
   const { products, isLoading } = useProducts('/products');
 
   return (
@@ -22,7 +22,7 @@ const HomePage: NextPage = () => {
       }
 
     </ShopLayout>
-  )
+  ) 
 }
 
 export default HomePage;

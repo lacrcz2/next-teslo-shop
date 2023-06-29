@@ -1,6 +1,9 @@
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next';
+
 import NextLink from 'next/link'
+import { signIn, getSession } from 'next-auth/react';
 
 import { useForm } from 'react-hook-form'
 import { AuthLayout } from "@/components/layouts"
@@ -22,23 +25,23 @@ const registerPage = () => {
     const { registerUser } = useContext(AuthContext);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>()
-    const [showError, setshowError] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const onRegisterForm = async( { email, password, name }: FormData ) => {
-
-        setshowError(false);
+        setShowError(false);
         const { hasError, message } = await registerUser(name, email, password);
 
-        if( hasError ){
-            setshowError(true);
-            setErrorMessage( message! ); // message! == message || ''
-            setTimeout(() => setshowError(false), 3000);
+        if ( hasError ) {
+            setShowError(true);
+            setErrorMessage( message! );
+            setTimeout(() => setShowError(false), 3000);
             return;
         }
+        // const destination = router.query.p?.toString() || '/';
+        // router.replace(destination);
 
-        const destination = router.query.p?.toString() || '/';
-        router.replace( destination );
+        await signIn('credentials',{ email, password });
     }
   return (
     <AuthLayout title={"Ingresar"}>
@@ -107,6 +110,24 @@ const registerPage = () => {
         </form>
     </AuthLayout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+    const session = await getSession({ req });
+    const { p = '/' } = query;
+
+    if ( session ) {
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: { }
+    }
 }
 
 export default registerPage;
