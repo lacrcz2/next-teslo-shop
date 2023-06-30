@@ -1,10 +1,11 @@
 // import NextLink from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
-import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 
 import { Link, Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
 import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
 
+import { authOptions } from '../api/auth/[...nextauth]';
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
 import { dbOrders } from '../../database';
@@ -106,10 +107,10 @@ const OrderPage: NextPage<Props> = ({ order }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
     
     const { id = '' } = query;
-    const session:any = await getSession({ req });
+    const session:any = await getServerSession(req, res, authOptions);
 
     if ( !session ) {
         return {
