@@ -48,15 +48,12 @@ export const authOptions: NextAuthOptions = {
           token.user = user;
         break;
       }
-
-
-
       return token;
     },
     async session({ session, token, user }) {
-      console.log('zz', session);
       session.accessToken = token.accessToken as any;
       session.user = token.user as any;
+      console.log('qq', session);
 
       return session;
     }

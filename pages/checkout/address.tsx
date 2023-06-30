@@ -20,7 +20,6 @@ type FormData = {
     phone    : string;
 }
 
-
 const getAddressFromCookies = ():FormData => {
     return {
         firstName : Cookies.get('firstName') || '',
@@ -33,8 +32,6 @@ const getAddressFromCookies = ():FormData => {
         phone     : Cookies.get('phone') || '',
     }
 }
-
-
 
 const AddressPage = () => {
 
