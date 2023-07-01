@@ -2,6 +2,8 @@ import { createContext } from 'react';
 
 interface ContextProps {
     isMenuOpen: boolean;
+
+    // Methods
     toggleSideMenu: () => void;
 }
 

@@ -21,7 +21,8 @@ export type OrderResponseBody = {
         | "SAVED"
         | "APPROVED"
         | "VOIDED"
-        | "PAYER_ACTION_REQUIRED";
+        | "PAYER_ACTION_REQUIRED"
+        | "CREATED";
 };
 
 interface Props {
